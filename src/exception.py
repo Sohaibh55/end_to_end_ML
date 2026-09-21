@@ -1,6 +1,6 @@
 
 import sys
-import logging
+
 
 def error_message_detail(error, error_detail: sys):
     _, _, exc_tb = error_detail.exc_info()
@@ -9,9 +9,9 @@ def error_message_detail(error, error_detail: sys):
     line_number = exc_tb.tb_lineno
 
     error_message = (
-        f"Error occurred in: [{file_name}]\n"
-        f"Line number: [{line_number}]\n"
-        f"Error message: [{str(error)}]"
+        f"FILE: [{file_name}]\n"
+        f"LINE: [{line_number}]\n"
+        f"ERROR: [{str(error)}]\n"
     )
 
     return error_message
@@ -29,12 +29,5 @@ class CustomException(Exception):
 
     def __str__(self):
         return self.error_message
+
     
-
-
-if __name__ == "__main__":
-        try:
-             a=1/0
-        except Exception as e:
-            logging.info("Divide by zero")
-            raise CustomException(e,sys)
