@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/home/Sohaib/mlproject/notebook/data/student_performance.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="3185"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="math_students" custom_title="0" dock_id="1" table="4,13:mainmath_students"/><dock_state state="000000ff00000000fd0000000100000002000002ef00000412fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000000002ef0000012700ffffff0000027f0000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="math_students" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="300"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1*">DROP TABLE IF EXISTS unified_students;
+
+CREATE TABLE unified_students AS
+
+SELECT
+    COALESCE(math.school, por.school) AS school,
+    COALESCE(math.sex, por.sex) AS sex,
+    COALESCE(math.age, por.age) AS age,
+    COALESCE(math.address, por.address) AS address,
+    COALESCE(math.famsize, por.famsize) AS famsize,
+    COALESCE(math.Pstatus, por.Pstatus) AS Pstatus,
+    COALESCE(math.Medu, por.Medu) AS Medu,
+    COALESCE(math.Fedu, por.Fedu) AS Fedu,
+    COALESCE(math.Mjob, por.Mjob) AS Mjob,
+    COALESCE(math.Fjob, por.Fjob) AS Fjob,
+    COALESCE(math.reason, por.reason) AS reason,
+    COALESCE(math.guardian, por.guardian) AS guardian,
+    COALESCE(math.traveltime, por.traveltime) AS traveltime,
+    COALESCE(math.studytime, por.studytime) AS studytime,
+    COALESCE(math.failures, por.failures) AS failures,
+    COALESCE(math.schoolsup, por.schoolsup) AS schoolsup,
+    COALESCE(math.famsup, por.famsup) AS famsup,
+    COALESCE(math.activities, por.activities) AS activities,
+    COALESCE(math.nursery, por.nursery) AS nursery,
+    COALESCE(math.higher, por.higher) AS higher,
+    COALESCE(math.internet, por.internet) AS internet,
+    COALESCE(math.romantic, por.romantic) AS romantic,
+    COALESCE(math.famrel, por.famrel) AS famrel,
+    COALESCE(math.freetime, por.freetime) AS freetime,
+    COALESCE(math.goout, por.goout) AS goout,
+    COALESCE(math.Dalc, por.Dalc) AS Dalc,
+    COALESCE(math.Walc, por.Walc) AS Walc,
+    COALESCE(math.health, por.health) AS health,
+
+    math.paid AS math_paid,
+    math.absences AS math_absences,
+    math.G1 AS math_G1,
+    math.G2 AS math_G2,
+    math.G3 AS math_G3,
+
+    por.paid AS por_paid,
+    por.absences AS por_absences,
+    por.G1 AS por_G1,
+    por.G2 AS por_G2,
+    por.G3 AS por_G3
+
+FROM math_students AS math
+
+FULL OUTER JOIN portuguese_students AS por
+
+ON math.school = por.school
+AND math.sex = por.sex
+AND math.age = por.age
+AND math.address = por.address
+AND math.famsize = por.famsize
+AND math.Pstatus = por.Pstatus
+AND math.Medu = por.Medu
+AND math.Fedu = por.Fedu
+AND math.Mjob = por.Mjob
+AND math.Fjob = por.Fjob
+AND math.reason = por.reason
+AND math.nursery = por.nursery
+AND math.internet = por.internet;
+
+SELECT COUNT(*) FROM unified_students; 
+SELECT math_G1 , por_G1 FROM unified_students;
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
